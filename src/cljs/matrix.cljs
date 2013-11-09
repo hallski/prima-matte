@@ -8,44 +8,39 @@
 
 (def current-operator (atom +))
 
-(def operators {"+" +
-                "-" -
-                "*" *
-                "/" /})
+(def operators {"+" +, "-" -, "*" *, "/" /})
 
-(defn produce-row [func n others]
+(defn calculate-row [func n others]
   (map #(func n %) others))
 
-(defn numbers-from-input-field [input-field]
-  (map js/parseInt (split (dom/value input-field) #"\s+")))
+(defn numbers-from-input-field [input-field-id]
+  (map js/parseInt (split (dom/value (dom/by-id input-field-id)) #"\s+")))
 
 (defn make-row [value]
   (h/html [:tr.number_row [:th value]
-       (map #(h/html [:td %])
-            (produce-row @current-operator value (numbers-from-input-field (dom/by-id "top_values"))))]))
+          (map #(h/html [:td %])
+               (calculate-row @current-operator value (numbers-from-input-field "top_values")))]))
 
-(defn update-input []
+(defn update-table []
   (let [tbody (dom/by-id "results_table")]
     (dom/destroy! (dom/children tbody))
     (dom/append! tbody
                  (h/html 
                    [:tr [:td.hidden] (join (map #(h/html [:th %])
-                                           (numbers-from-input-field (dom/by-id "top_values")))) 
-                          ]))
+                                           (numbers-from-input-field "top_values")))]))
     (dom/append! tbody
-                 (join (map make-row (numbers-from-input-field (dom/by-id "left_values")))))))
+                 (join (map make-row (numbers-from-input-field "left_values"))))))
 
 (defn update-operator [evt]
   (reset! current-operator (operators (dom/text (:target evt))))
-  (update-input))
+  (update-table))
 
 (defn ^:export init [] 
-  (event/listen! (dom/by-id "top_values") :keyup update-input)
-  (event/listen! (dom/by-id "left_values") :keyup update-input)
+  (event/listen! (dom/by-id "top_values") :keyup update-table)
+  (event/listen! (dom/by-id "left_values") :keyup update-table)
   (doseq [button-id ["plus_btn" "minus_btn" "mult_btn" "div_btn"]]
     (event/listen! (dom/by-id button-id) :click update-operator)))
 
 ;; Todo
-;; - Refactor update-input
-;; - Refactor make-roww
-;; - Support operator
+;; - Print out selected operator
+;; - Don't calculate table before there are values in both axis
