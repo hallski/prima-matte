@@ -1,17 +1,12 @@
 body {
-    background-color: #aaa;
-}
-
-th, td {
-    border: 1px solid black;
-}
-
-td.hidden {
-    border: 0px;
+    font: normal 14px Verdana, Tahoma, sans-serif;
 }
 
 button.operator_button {
     border-style: none;
+    padding: 10px;
+    width: 100px;
+    font-size: 20px;
 }
 
 button.operator_button.selected {
@@ -19,32 +14,28 @@ button.operator_button.selected {
     background-color: turquoise;
 }
 
-.info, .success, .warning, .error {
-    border: 1px solid;
-    margin: 10px 0px;
-    padding:15px 10px 15px 50px;
-    background-repeat: no-repeat;
-    background-position: 10px center;-moz-border-radius:.5em;
-    -webkit-border-radius:.5em;
-    border-radius:.5em;
+input {
+    padding: 9px;
+    border: solid 1px #e5e5e5;
+    outline: 0;
+    font: normal 17px Verdana, Tahoma, sans-serif;
+    width: 400px;
+    background-color: #fff;
 }
-.info {
-    color: #00529B;
-    background-color: #BDE5F8;
-/*    background-image: url('info.png');*/
+
+form label {
+    margin-left: 10px;
+    color: #999;
 }
-.success {
-    color: #4F8A10;
-    background-color: #DFF2BF;
-/*    background-image:url('success.png'); */
+
+table#results-table {
+    font-size: 16px;
+    background-color: #eee;
+    padding: 5px;
+    border-spacing: 10px 10px;
 }
-.warning {
-    color: #9F6000;
-    background-color: #FEEFB3;
-/*    background-image: url('warning.png');*/
-}
-.error {
-    color: #D8000C;
-    background-color: #FFBABA;
-/*    background-image: url('error.png'); */
+
+th, td {
+    text-align: center;
+    margin-left: 10px;
 }

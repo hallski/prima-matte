@@ -7,14 +7,21 @@
     <link rel="stylesheet" href="prima_matte.css"/>
   </head>
   <body>
+    <h1>Prima matte: Matrisräkning</h1>
+    <p>Välj operator och mata in kolumnernas resp. radernas värden</p>
     <button class="operator_button" id="plus_btn">+</button>
     <button class="operator_button" id="minus_btn">-</button>
     <button class="operator_button" id="mult_btn">*</button>
     <button class="operator_button" id="div_btn">/</button>
     <form id="input_form">
-      <legend>Mata in värden och funktion</legend>
-      <p><input type="text" id="top_values"/></p>
-      <p><input type="text" id="left_values"/></p>
+      <p>
+        <input type="text" id="top_values"/>
+        <label for="top_values">Kolumnernas värden</label>
+      </p>
+      <p>
+        <input type="text" id="left_values"/>
+        <label for="left_values">Radernas värden</label>
+      </p>
     </form>
 
     <table id="results-table">
