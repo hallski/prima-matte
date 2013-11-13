@@ -10,6 +10,15 @@ td.hidden {
     border: 0px;
 }
 
+button.operator_button {
+    border-style: none;
+}
+
+button.operator_button.selected {
+    font-weight: bold;
+    background-color: turquoise;
+}
+
 .info, .success, .warning, .error {
     border: 1px solid;
     margin: 10px 0px;

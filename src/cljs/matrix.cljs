@@ -8,7 +8,10 @@
 
 (def current-operator (atom +))
 
-(def operators {"+" +, "-" -, "*" *, "/" /})
+(def operators {"+" {:func + :css-id "plus_btn"}
+                "-" {:func - :css-id "minus_btn"}
+                "*" {:func * :css-id "mult_btn"}
+                "/" {:func / :css-id "div_btn"}})
 
 (defn calculate-row [func n others]
   (map #(func n %) others))
@@ -31,16 +34,21 @@
     (dom/append! tbody
                  (join (map make-row (numbers-from-input-field "left_values"))))))
 
-(defn update-operator [evt]
-  (reset! current-operator (operators (dom/text (:target evt))))
+(defn set-operator! [operator]
+  (reset! current-operator (:func operator))
+  (dom/remove-class! (dom/by-class "operator_button") "selected")
+  (dom/add-class! (dom/by-id (:css-id operator)) "selected")
   (update-table))
+
+(defn update-operator [evt]
+  (set-operator! (operators (dom/text (:target evt)))))
 
 (defn ^:export init [] 
   (event/listen! (dom/by-id "top_values") :keyup update-table)
   (event/listen! (dom/by-id "left_values") :keyup update-table)
   (doseq [button-id ["plus_btn" "minus_btn" "mult_btn" "div_btn"]]
-    (event/listen! (dom/by-id button-id) :click update-operator)))
+    (event/listen! (dom/by-id button-id) :click update-operator))
+  (set-operator! (operators "+")))
 
 ;; Todo
-;; - Print out selected operator
 ;; - Don't calculate table before there are values in both axis
