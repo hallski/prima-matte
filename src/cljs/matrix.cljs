@@ -54,3 +54,5 @@
     (event/listen! (dom/by-id button-id) :click update-operator))
   (set-operator! (operators "+")))
 
+;; TODO:
+;; - Add testing
