@@ -17,7 +17,7 @@
   (map #(func n %) others))
 
 (defn numbers-from-input-field [input-field-id]
-  (map js/parseInt (split (dom/value (dom/by-id input-field-id)) #"\s+")))
+  (filter #(not (js/isNaN %)) (map js/parseInt (split (dom/value (dom/by-id input-field-id)) #"\s+"))))
 
 (defn make-row [value]
   (h/html [:tr.number_row [:th value]
@@ -25,14 +25,18 @@
                (calculate-row @current-operator value (numbers-from-input-field "top_values")))]))
 
 (defn update-table []
-  (let [tbody (dom/by-id "results_table")]
+  (let [tbody (dom/by-id "results_table")
+        col-values (numbers-from-input-field "top_values")
+        row-values (numbers-from-input-field "left_values")]
     (dom/destroy! (dom/children tbody))
-    (dom/append! tbody
-                 (h/html 
+    (when (and (> (count col-values) 0)
+             (> (count row-values) 0))
+      (dom/append! tbody
+                   (h/html
                    [:tr [:td.hidden] (join (map #(h/html [:th %])
                                            (numbers-from-input-field "top_values")))]))
-    (dom/append! tbody
-                 (join (map make-row (numbers-from-input-field "left_values"))))))
+      (dom/append! tbody
+                   (join (map make-row (numbers-from-input-field "left_values")))))))
 
 (defn set-operator! [operator]
   (reset! current-operator (:func operator))
@@ -50,5 +54,3 @@
     (event/listen! (dom/by-id button-id) :click update-operator))
   (set-operator! (operators "+")))
 
-;; Todo
-;; - Don't calculate table before there are values in both axis
