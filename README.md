@@ -2,10 +2,6 @@
 
 Small web app that calculcates a matrix of values based on operator and col/row values.
 
-## Usage
-
-FIXME
-
 ## License
 
 Copyright © 2013 Mikael Hallendal
